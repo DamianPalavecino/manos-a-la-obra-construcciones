@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { MapPin, Phone, Mail, Check, ChevronDown } from 'lucide-react';
 import { EMAIL_ADDRESS, LOCATION, WHATSAPP_NUMBER } from '@/constants';
 import WhatsAppIcon from './WhatsAppIcon';
 
@@ -14,7 +14,6 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Formatea el mensaje para WhatsApp de manera estructurada
     const text = `Hola! 👋
 
 Mi nombre es: *${formData.name}*
@@ -33,14 +32,40 @@ Gracias! 🙏`;
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const phoneNumber = '+(54) 11 3024-9544';
+  const phoneNumberClean = phoneNumber.replace(/[^\d+]/g, ''); // Remove spaces and special chars for tel: link
+  
+  const contactItems = [
+    { 
+      icon: MapPin, 
+      title: 'Ubicación', 
+      value: LOCATION,
+      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(LOCATION)}`,
+      isLink: true
+    },
+    { 
+      icon: Phone, 
+      title: 'Llamanos', 
+      value: phoneNumber,
+      href: `tel:${phoneNumberClean}`,
+      isLink: true
+    },
+    { 
+      icon: Mail, 
+      title: 'Escribinos', 
+      value: EMAIL_ADDRESS,
+      href: `mailto:${EMAIL_ADDRESS}`,
+      isLink: true
+    },
+  ];
+
   return (
-    <section id="contacto" className="py-20 bg-brand-dark text-white">
+    <section id="contacto" className="py-24 md:py-32 bg-brand-dark text-white">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
+
           {/* Contact Info */}
           <div>
-            <h2 className="text-gray-400 text-sm font-bold tracking-widest uppercase mb-3">Contacto</h2>
             <h3 className="text-4xl md:text-5xl font-heading font-bold mb-6">
               ¿Soñando con tu nuevo hogar?
             </h3>
@@ -48,90 +73,102 @@ Gracias! 🙏`;
               Dejanos tu consulta y te respondemos a la brevedad. Estamos listos para comenzar tu próximo proyecto.
             </p>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-white/10 rounded-lg">
-                  <MapPin className="text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Ubicación</h4>
-                  <p className="text-gray-300">{LOCATION}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-white/10 rounded-lg">
-                  <Phone className="text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Llamanos</h4>
-                  <p className="text-gray-300">+(54) 11 3024-9544</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-white/10 rounded-lg">
-                  <Mail className="text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Escribinos</h4>
-                  <p className="text-gray-300">{EMAIL_ADDRESS}</p>
-                </div>
-              </div>
+            <div className="space-y-4">
+              {contactItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  target={item.title === 'Ubicación' ? '_blank' : undefined}
+                  rel={item.title === 'Ubicación' ? 'noopener noreferrer' : undefined}
+                  className="group flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer block"
+                >
+                  <div className="p-3 bg-gradient-to-br from-white/20 to-white/5 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                    <item.icon className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg text-white mb-1">{item.title}</h4>
+                    <p className="text-gray-300 group-hover:text-white transition-colors">
+                      {item.value}
+                    </p>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Form */}
-          <div className="bg-white rounded-2xl p-8 text-brand-dark">
-            <h4 className="text-2xl font-bold mb-6">Solicitar Presupuesto</h4>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold mb-1 text-gray-700">Nombre Completo</label>
-                <input 
-                  type="text" 
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark transition-colors"
-                  placeholder="Tu nombre"
-                />
+          <div className="bg-white rounded-3xl p-8 md:p-10 text-brand-dark shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]">
+            <h4 className="text-2xl font-bold mb-2">Solicitar Presupuesto</h4>
+            <p className="text-gray-500 mb-8">Completá el formulario y te contactamos</p>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Name Input */}
+              <div className="group">
+                <label className="block text-sm font-semibold mb-2 text-gray-700 group-focus-within:text-brand-dark transition-colors">
+                  Nombre Completo
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-5 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-brand-dark focus:bg-white transition-all duration-300 placeholder:text-gray-400"
+                    placeholder="Tu nombre"
+                  />
+                  {formData.name.length > 2 && (
+                    <Check className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 w-5 h-5" />
+                  )}
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-1 text-gray-700">Tipo de Proyecto</label>
-                <select 
-                  name="projectType"
-                  value={formData.projectType}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark transition-colors appearance-none"
-                >
-                  <option>Construcción Nueva</option>
-                  <option>Remodelación / Reforma</option>
-                  <option>Dirección de Obra</option>
-                  <option>Otro</option>
-                </select>
+              {/* Project Type Select */}
+              <div className="group">
+                <label className="block text-sm font-semibold mb-2 text-gray-700">
+                  Tipo de Proyecto
+                </label>
+                <div className="relative">
+                  <select
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleChange}
+                    className="w-full px-5 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-brand-dark focus:bg-white transition-all duration-300 appearance-none cursor-pointer"
+                  >
+                    <option>Construcción Nueva</option>
+                    <option>Remodelación / Reforma</option>
+                    <option>Dirección de Obra</option>
+                    <option>Otro</option>
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-1 text-gray-700">Mensaje</label>
-                <textarea 
+              {/* Message Textarea */}
+              <div className="group">
+                <label className="block text-sm font-semibold mb-2 text-gray-700">
+                  Mensaje
+                </label>
+                <textarea
                   name="message"
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  rows={6}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-dark/20 focus:border-brand-dark transition-colors resize-none"
-                  placeholder="Escribí tu mensaje aquí..."
+                  rows={5}
+                  className="w-full px-5 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl focus:outline-none focus:border-brand-dark focus:bg-white transition-all duration-300 resize-none placeholder:text-gray-400"
+                  placeholder="Contanos sobre tu proyecto..."
                 ></textarea>
               </div>
 
-              <button 
+              {/* Submit Button */}
+              <button
                 type="submit"
-                className="w-full bg-brand-dark text-white font-bold py-4 rounded-lg hover:bg-black transition-colors flex items-center justify-center gap-2"
+                className="group w-full bg-gradient-to-r from-brand-dark to-brand-primary text-white font-bold py-5 rounded-xl hover:shadow-button active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden"
               >
-                <WhatsAppIcon size={18} />
-                Enviar por WhatsApp
+                {/* Shine Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <WhatsAppIcon size={20} />
+                <span className="relative">Enviar por WhatsApp</span>
               </button>
             </form>
           </div>

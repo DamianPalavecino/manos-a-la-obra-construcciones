@@ -65,7 +65,7 @@ export const PROJECTS = [
     id: 1,
     title: "Casa Minimalista Zona Norte",
     category: "Vivienda",
-    image: "https://images.unsplash.com/photo-1600596542815-2a4d04774c13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "/images/house.jpg"
   },
   {
     id: 2,
@@ -83,13 +83,13 @@ export const PROJECTS = [
     id: 4,
     title: "Duplex Moderno",
     category: "Vivienda",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "https://images.pexels.com/photos/3813470/pexels-photo-3813470.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
   },
   {
     id: 5,
     title: "Renovación Baño Principal",
     category: "Remodelación",
-    image: "https://images.unsplash.com/photo-1584622050111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "https://images.pexels.com/photos/1457847/pexels-photo-1457847.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
   },
   {
     id: 6,
@@ -104,19 +104,22 @@ export const TESTIMONIALS = [
     id: 1,
     name: "Carlos Rodríguez",
     text: "Excelente trabajo. Cumplieron con los plazos y el presupuesto. La remodelación de mi cocina quedó espectacular.",
-    role: "Cliente Particular"
+    role: "Cliente Particular",
+    rating: 5
   },
   {
     id: 2,
     name: "Ana Laura Martínez",
     text: "Contratamos el servicio llave en mano para nuestra casa y fue la mejor decisión. Se encargaron de todo.",
-    role: "Cliente Llave en Mano"
+    role: "Cliente Llave en Mano",
+    rating: 5
   },
   {
     id: 3,
     name: "Estudio Arquitectura Z",
     text: "Como profesionales, recomendamos a Manos a la Obra por su seriedad y calidad de ejecución en obra.",
-    role: "Socio Estratégico"
+    role: "Socio Estratégico",
+    rating: 5
   }
 ];
 

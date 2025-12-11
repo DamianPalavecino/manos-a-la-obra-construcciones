@@ -18,7 +18,12 @@ module.exports = {
       fontFamily: {
         heading: ['Montserrat', 'sans-serif'],
         body: ['Open Sans', 'sans-serif'],
-      }
+      },
+      boxShadow: {
+        'card': '0 4px 20px -4px rgba(0, 0, 0, 0.1)',
+        'card-hover': '0 20px 40px -12px rgba(45, 45, 45, 0.25)',
+        'button': '0 10px 30px -6px rgba(45, 45, 45, 0.5)',
+      },
     },
   },
   plugins: [],

@@ -12,3 +12,16 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-dark to-brand-primary bg-clip-text text-transparent;
+  }
+
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(rgba(45, 45, 45, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 45, 45, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
